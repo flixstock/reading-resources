@@ -20,13 +20,6 @@ moving:
     twitter: https://twitter.com/flixstock
     github:  https://github.com/flixstock
 
-
-# Build settings
-# Use `theme` while developing locally and `remote_theme` while publishing.
-# theme: moving
-remote_theme: huangyz0918/moving
-
-
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
