@@ -1,0 +1,32 @@
+title: FlixStock Reading Resources
+author: FlixStock Dev
+email: # Email shown in the footer
+url: # this is your site's root address.
+description: > # This means to ignore newlines until "show_excerpts:"
+favicon: "https://www.flixstock.com/wp-content/themes/salient/images/favicon.ico"
+permalink: /:slugified_categories/:title/
+
+show_excerpts: true # set to true to show excerpts on the homepage
+  
+moving:
+  avatar_url: "https://www.flixstock.com/wp-content/themes/salient/images/new-homepage/fx-logo.png" # avatar in about page
+  about_you: # short description about you in about page
+  date_format: "%b %d, %Y" # date format of posts in home page
+
+  # generate social links in about page.
+  social_links:
+    web: https://www.flixstock.com/
+    linkedin: https://www.linkedin.com/company/flixstock/
+    twitter: https://twitter.com/flixstock
+    github:  https://github.com/flixstock
+
+
+# Build settings
+# Use `theme` while developing locally and `remote_theme` while publishing.
+# theme: moving
+remote_theme: huangyz0918/moving
+
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag

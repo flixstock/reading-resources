@@ -1,0 +1,44 @@
+{%- assign social = site.moving.social_links -%}
+
+<ul class="social-media-list">
+  {%- if social.web -%}
+  <li>
+    <a class="black-link" href="{{ social.web }}" >
+      <span class="fa-stack">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-link fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  {%- endif -%} 
+  {%- if social.linkedin -%}
+  <li>
+    <a class="black-link" href="{{ social.linkedin }}" >
+      <span class="fa-stack">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  {%- endif -%} 
+  {%- if social.twitter -%}
+  <li>
+    <a class="black-link" href="{{ social.twitter }}" >
+      <span class="fa-stack">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+      </span>      
+    </a>
+  </li>
+  {%- endif -%} 
+  {%- if social.github -%}
+  <li>
+    <a class="black-link" href="{{ social.github }}" >
+      <span class="fa-stack">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+  </li>
+  {%- endif -%}
+</ul>
