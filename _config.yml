@@ -1,9 +1,11 @@
 title: FlixStock Reading Resources
 author: FlixStock Dev
 email: # Email shown in the footer
-url: https://flixstock.github.io/
-baseurl: /reading-resources/
-description: > # This means to ignore newlines until "show_excerpts:"
+url: https://flixstock.github.io
+baseurl: /reading-resources
+description: > # This means to ignore newlines until the next key
+  This is a collection of resources that should can be handy while getting 
+  started with image based transformations using deep learning.
 favicon: "https://www.flixstock.com/wp-content/themes/salient/images/favicon.ico"
 permalink: /:slugified_categories/:title/
 
@@ -16,8 +18,8 @@ moving:
 
   # generate social links in about page.
   social_links:
-    web: https://www.flixstock.com/
-    linkedin: https://www.linkedin.com/company/flixstock/
+    web: https://www.flixstock.com
+    linkedin: https://www.linkedin.com/company/flixstock
     twitter: https://twitter.com/flixstock
     github:  https://github.com/flixstock
 

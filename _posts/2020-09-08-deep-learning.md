@@ -2,9 +2,6 @@
 layout: post
 title: Deep Learning
 category: Reading Lists
-authors: 
-    - Nikhil Verma
-    - Mayank Agarwal
 ---
 
 This is a list of resources that should be helpful from time to time.

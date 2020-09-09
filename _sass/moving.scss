@@ -2,12 +2,12 @@
 
 // Define defaults for each variable.
 
-$base-font-family: "Palatino", "Bitter", "Georgia", "Book Antiqua", sans-serif;
-$base-font-size: 21px !default;
-$base-font-weight: 500 !default;
+$base-font-family: "Lora", "Bitter", "Palatino", "Palatino Linotype", "Book Antiqua", sans-serif;
+$base-font-size: 20px !default;
+$base-font-weight: 400 !default;
 $small-font-size: $base-font-size * 0.85 !default;
 $base-line-height: 1.5 !default;
-$small-line-height: 1.3 !default;
+$small-line-height: 1.2 !default;
 
 $spacing-unit: 30px !default;
 
