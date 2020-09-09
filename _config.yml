@@ -1,7 +1,8 @@
 title: FlixStock Reading Resources
 author: FlixStock Dev
 email: # Email shown in the footer
-url: https://flixstock.github.io/reading-resources
+url: https://flixstock.github.io/
+baseurl: /reading-resources/
 description: > # This means to ignore newlines until "show_excerpts:"
 favicon: "https://www.flixstock.com/wp-content/themes/salient/images/favicon.ico"
 permalink: /:slugified_categories/:title/

@@ -6,7 +6,7 @@
         <ul class="contact-list">
           <li class="p-name">
             &copy; {{ 'now' | date: "%Y" }} {{ site.author | escape }} 
-            <a class="black-link pull-right" href="{{ site.url }}/about/">About Us</a>
+            <a class="black-link pull-right" href="{{ 'about' | relative_url }}">About Us</a>
           </li>
           {%- if site.email -%}
           <li>
