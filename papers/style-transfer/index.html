@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Intro to Style Transfer" />
+<meta name="author" content="Nikhil Verma" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Image Style Transfer Using Convolutional Neural Networks" />
+<meta property="og:description" content="Image Style Transfer Using Convolutional Neural Networks" />
+<link rel="canonical" href="https://flixstock.github.io/reading-resources/papers/style-transfer/" />
+<meta property="og:url" content="https://flixstock.github.io/reading-resources/papers/style-transfer/" />
+<meta property="og:site_name" content="FlixStock Reading Resources" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-09-08T00:00:00+00:00" />
+<script type="application/ld+json">
+{"headline":"Intro to Style Transfer","dateModified":"2020-09-08T00:00:00+00:00","datePublished":"2020-09-08T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://flixstock.github.io/reading-resources/papers/style-transfer/"},"author":{"@type":"Person","name":"Nikhil Verma"},"url":"https://flixstock.github.io/reading-resources/papers/style-transfer/","description":"Image Style Transfer Using Convolutional Neural Networks","@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/reading-resources/assets/css/main.css" />
+  <link rel="shortcut icon" type="image/x-icon" href="https://www.flixstock.com/wp-content/themes/salient/images/favicon.ico" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/styles/agate.min.css">
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.0/build/highlight.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <script>hljs.initHighlightingOnLoad();</script><link type="application/atom+xml" rel="alternate" href="https://flixstock.github.io/reading-resources/feed.xml" title="FlixStock Reading Resources" /></head>
+    <body>
+    <main class="page-content" aria-label="Content">
+        <div class="wrapper">
+            <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <head>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+        CommonHTML: { linebreaks: { automatic: true } },
+        "HTML-CSS": { linebreaks: { automatic: true } },
+              SVG: { linebreaks: { automatic: true } }
+      });
+    </script>
+    <script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_CHTML">
+    </script>
+    <title>Intro to Style Transfer</title>
+  </head>
+  <header class="post-header">
+    <div class="post-back">
+      <a class="black-link" href="/reading-resources/">Home</a> •  Papers
+    </div>
+
+    <h1 class="post-title p-name" itemprop="name headline">
+      Intro to Style Transfer
+    </h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2020-09-08T00:00:00+00:00" itemprop="datePublished">Sep 8, 2020
+      </time>•
+      <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-author h-card" itemprop="name">Nikhil Verma</span>
+      </span></p>
+  </header>
+  <hr/>
+  <div class="post-content e-content" itemprop="articleBody">
+    <h2 id="image-style-transfer-using-convolutional-neural-networks">Image Style Transfer Using Convolutional Neural Networks</h2>
+
+<p>This paper introduced neural style transfer. It uses a VGGNet pre-trained on the ImageNet dataset for the purpose. The key idea is to be able to separate content and style from the representations of the network. Once that is done, a new image is synthesized from white noise where two different kind of losses are minimized - a style loss between the style image and the hybrid image, and a content loss between the content image and the hybrid image.</p>
+
+<h2 id="intuitions">Intuitions</h2>
+
+<p>Since the VGGNet was originally trained for object classification, the layers towards the end of the network should have enough information to be able to recognise the object while still being invariant to its lower level features like position, style, etc. Therefore, we use the higher layers for the purposes of extracting content from the image, and the lower layers for the purposes of capturing the style of the image. This intuition is formalised in the way the losses are calculated.</p>
+
+<h2 id="content-loss">Content Loss</h2>
+
+<p>The representation of every image $\vec{x}$ in each layer $l$ of a CNN can be encoded by the feature response $F^l$ to the layer. Therefore, for the hybrid image $\vec{x}$ to be able to match the content of the original image $\vec{p}$, their respective feature representations $F^l$ and $P^l$ should be similar. This gives rise to the content loss, which is simply the squared error loss between the two. Note that $F^l \in \mathbb{R}^{N_l \times M_l}$ where $F_{ij}^{l}$ is the activation of the $i$th filter at the $j$th position in layer $l$ with $N_l$ distinct features each of size $M_l$</p>
+
+\[L_{content} (\vec{p}, \vec{x}, l) = \frac{1}{2} \sum_{i, j} (F_{ij}^l - P_{ij}^l)\]
+
+<h2 id="style-loss">Style Loss</h2>
+
+<p>To capture the style of an image, we might just want to capture the feature responses from the lower layers of the image. But note that those layers also contain spatial information about the content of the image which are later used by the higher layers of the network. Therefore, there is a need to decouple that information from the style of the image. To do so, we use a matrix of feature correlations built on top of the feature responses of each layer in the CNN. The feature correlations are given by something called as the Gram matrix $G^l \in \mathbb{R}^{N_l \times N_l}$, where $G_{ij}^l$ is the inner product between the feature maps $i$ and $j$ in layer $l$.</p>
+
+\[G_{ij}^l = \sum_k F_{ik}^l F_{jk}^l\]
+
+<p>If $\vec{a}$ and $\vec{x}$ are the style image and the hybrid image respectively, then just like the content loss, we want the gram matrix of the style image $A^l$ to be as close as possible to the gram matrix of the hybrid image $G^l$. The style loss $E_l$ for every layer $l$ of the network is then defined as the squared loss between the two gram matrices. The total style loss is the weighted sum of the individual layer losses $E_l$ where $w_l$ are the weighing factors described separately in the paper.</p>
+
+\[L_{style} (\vec{a}, \vec{x}) = \sum_{l=0}^{L} w_l E_l
+\hspace{2cm}
+E_l = \frac{1}{4 N_l^2 M_l^2} \sum_{i,j} (G_{ij}^l - A_{ij}^l)^2\]
+
+<p>The total loss $L_{total}$ is the weighted sum of the content and style losses with weights $\alpha$ and $\beta$ respectively.</p>
+
+\[L_{total} (\vec{p}, \vec{a}, \vec{x}) = \alpha L_{content} (\vec{p}, \vec{x}) + \beta L_{style} (\vec{a}, \vec{x})\]
+
+  </div>
+  <hr/>
+  <a class="u-url" href="/reading-resources/papers/style-transfer/" hidden></a>
+</article>
+
+        </div>
+    </main>
+        <footer class="site-footer h-card">
+  <data class="u-url" href="/reading-resources/"></data>
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <ul class="contact-list">
+          <li class="p-name">
+            &copy; 2020 FlixStock Dev 
+            <a class="black-link pull-right" href="/reading-resources/about/">About Us</a>
+          </li></ul>
+      </div>
+    </div>
+  </div>
+</footer>
+    </body>
+</html>

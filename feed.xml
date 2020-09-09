@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="https://flixstock.github.io/reading-resources/feed.xml" rel="self" type="application/atom+xml" /><link href="https://flixstock.github.io/reading-resources/" rel="alternate" type="text/html" /><updated>2020-09-09T12:49:13+00:00</updated><id>https://flixstock.github.io/reading-resources/feed.xml</id><title type="html">FlixStock Reading Resources</title><subtitle>This is a collection of resources that should can be handy while getting  started with image based transformations using deep learning.
+</subtitle><author><name>FlixStock Dev</name></author><entry><title type="html">Deep Learning</title><link href="https://flixstock.github.io/reading-resources/reading-lists/deep-learning/" rel="alternate" type="text/html" title="Deep Learning" /><published>2020-09-08T00:00:00+00:00</published><updated>2020-09-08T00:00:00+00:00</updated><id>https://flixstock.github.io/reading-resources/reading-lists/deep-learning</id><content type="html" xml:base="https://flixstock.github.io/reading-resources/reading-lists/deep-learning/">&lt;p&gt;This is a list of resources that should be helpful from time to time.&lt;/p&gt;
+
+&lt;h2 id=&quot;papers&quot;&gt;Papers&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Image Morphing&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://arxiv.org/abs/1506.02025&quot;&gt;Spatial Transformer Networks&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://arxiv.org/abs/1807.07688&quot;&gt;Virtual Try-On Network (CP-VTON)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Style Transfer&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://openaccess.thecvf.com/content_cvpr_2016/html/Gatys_Image_Style_Transfer_CVPR_2016_paper.html&quot;&gt;Image Style Transfer Using Convolutional Neural Networks&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://arxiv.org/abs/1603.08155&quot;&gt;Perceptual Losses for Real-Time Style Transfer and Super-Resolution&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;blogs&quot;&gt;Blogs&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://medium.com/@jonathan_hui/gan-stylegan-stylegan2-479bdf256299&quot;&gt;GAN — StyleGAN &amp;amp; StyleGAN2&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://towardsdatascience.com/slow-and-arbitrary-style-transfer-3860870c8f0e&quot;&gt;Slow and Arbitrary Style Transfer&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://towardsdatascience.com/fast-and-restricted-style-transfer-bbfc383cccd6&quot;&gt;Fast and Restricted Style Transfer&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>FlixStock Dev</name></author><category term="Reading Lists" /><summary type="html">This is a list of resources that should be helpful from time to time.</summary></entry><entry><title type="html">Intro to Style Transfer</title><link href="https://flixstock.github.io/reading-resources/papers/style-transfer/" rel="alternate" type="text/html" title="Intro to Style Transfer" /><published>2020-09-08T00:00:00+00:00</published><updated>2020-09-08T00:00:00+00:00</updated><id>https://flixstock.github.io/reading-resources/papers/style-transfer</id><content type="html" xml:base="https://flixstock.github.io/reading-resources/papers/style-transfer/">&lt;h2 id=&quot;image-style-transfer-using-convolutional-neural-networks&quot;&gt;Image Style Transfer Using Convolutional Neural Networks&lt;/h2&gt;
+
+&lt;p&gt;This paper introduced neural style transfer. It uses a VGGNet pre-trained on the ImageNet dataset for the purpose. The key idea is to be able to separate content and style from the representations of the network. Once that is done, a new image is synthesized from white noise where two different kind of losses are minimized - a style loss between the style image and the hybrid image, and a content loss between the content image and the hybrid image.&lt;/p&gt;
+
+&lt;h2 id=&quot;intuitions&quot;&gt;Intuitions&lt;/h2&gt;
+
+&lt;p&gt;Since the VGGNet was originally trained for object classification, the layers towards the end of the network should have enough information to be able to recognise the object while still being invariant to its lower level features like position, style, etc. Therefore, we use the higher layers for the purposes of extracting content from the image, and the lower layers for the purposes of capturing the style of the image. This intuition is formalised in the way the losses are calculated.&lt;/p&gt;
+
+&lt;h2 id=&quot;content-loss&quot;&gt;Content Loss&lt;/h2&gt;
+
+&lt;p&gt;The representation of every image $\vec{x}$ in each layer $l$ of a CNN can be encoded by the feature response $F^l$ to the layer. Therefore, for the hybrid image $\vec{x}$ to be able to match the content of the original image $\vec{p}$, their respective feature representations $F^l$ and $P^l$ should be similar. This gives rise to the content loss, which is simply the squared error loss between the two. Note that $F^l \in \mathbb{R}^{N_l \times M_l}$ where $F_{ij}^{l}$ is the activation of the $i$th filter at the $j$th position in layer $l$ with $N_l$ distinct features each of size $M_l$&lt;/p&gt;
+
+\[L_{content} (\vec{p}, \vec{x}, l) = \frac{1}{2} \sum_{i, j} (F_{ij}^l - P_{ij}^l)\]
+
+&lt;h2 id=&quot;style-loss&quot;&gt;Style Loss&lt;/h2&gt;
+
+&lt;p&gt;To capture the style of an image, we might just want to capture the feature responses from the lower layers of the image. But note that those layers also contain spatial information about the content of the image which are later used by the higher layers of the network. Therefore, there is a need to decouple that information from the style of the image. To do so, we use a matrix of feature correlations built on top of the feature responses of each layer in the CNN. The feature correlations are given by something called as the Gram matrix $G^l \in \mathbb{R}^{N_l \times N_l}$, where $G_{ij}^l$ is the inner product between the feature maps $i$ and $j$ in layer $l$.&lt;/p&gt;
+
+\[G_{ij}^l = \sum_k F_{ik}^l F_{jk}^l\]
+
+&lt;p&gt;If $\vec{a}$ and $\vec{x}$ are the style image and the hybrid image respectively, then just like the content loss, we want the gram matrix of the style image $A^l$ to be as close as possible to the gram matrix of the hybrid image $G^l$. The style loss $E_l$ for every layer $l$ of the network is then defined as the squared loss between the two gram matrices. The total style loss is the weighted sum of the individual layer losses $E_l$ where $w_l$ are the weighing factors described separately in the paper.&lt;/p&gt;
+
+\[L_{style} (\vec{a}, \vec{x}) = \sum_{l=0}^{L} w_l E_l
+\hspace{2cm}
+E_l = \frac{1}{4 N_l^2 M_l^2} \sum_{i,j} (G_{ij}^l - A_{ij}^l)^2\]
+
+&lt;p&gt;The total loss $L_{total}$ is the weighted sum of the content and style losses with weights $\alpha$ and $\beta$ respectively.&lt;/p&gt;
+
+\[L_{total} (\vec{p}, \vec{a}, \vec{x}) = \alpha L_{content} (\vec{p}, \vec{x}) + \beta L_{style} (\vec{a}, \vec{x})\]</content><author><name>Nikhil Verma</name></author><category term="Papers" /><summary type="html">Image Style Transfer Using Convolutional Neural Networks</summary></entry></feed>
